@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
 	}
 	else if (STR_ENDS_WITH(argv[1], ".qoi")) {
 		qoi_desc desc;
-		pixels = qoi_read(argv[1], &desc, 0);
+		pixels = qoi_read(argv[1], &desc, 0, NULL);
 		channels = desc.channels;
 		w = desc.width;
 		h = desc.height;
@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
 			.height = h, 
 			.channels = channels,
 			.colorspace = QOI_SRGB
-		});
+		}, NULL);
 	}
 
 	if (!encoded) {

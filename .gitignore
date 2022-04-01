@@ -1,5 +1,8 @@
 images/
+build/
 stb_image.h
 stb_image_write.h
 qoibench
 qoiconv
+example.png
+.DS_Store
