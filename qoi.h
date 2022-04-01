@@ -323,8 +323,11 @@ void *qoi_decode(const void *data, int size, qoi_desc *desc, int channels,
 Implementation */
 
 #ifdef QOI_IMPLEMENTATION
-#include <stdlib.h>
 #include <string.h>
+
+#if !defined(QOI_NO_STDIO) && !defined(QOI_MALLOC)
+#include <stdlib.h>
+#endif
 
 #ifndef QOI_MALLOC
 	#define QOI_MALLOC(ctx, sz) malloc(sz)
