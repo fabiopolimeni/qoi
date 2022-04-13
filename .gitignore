@@ -4,5 +4,8 @@ stb_image.h
 stb_image_write.h
 qoibench
 qoiconv
-example*
+
 .DS_Store
+
+*.qoi
+*.png
