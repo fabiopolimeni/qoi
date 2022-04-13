@@ -312,6 +312,10 @@ The returned pixel data should be free()d after use. */
 void *qoi_decode(const void *data, int size, qoi_desc *desc, int channels,
 	void *mem_ctx);
 
+/* Read image infos from memory.
+
+Returns 1 if succeeds, 0 in case of failure, e.g. not a QOI image. */
+int qoi_info(const void* data, int size, int *w, int *h, int* components);
 
 #ifdef __cplusplus
 }
@@ -512,6 +516,35 @@ void *qoi_encode(const void *data, const qoi_desc *desc, int *out_len,
 
 	*out_len = p;
 	return bytes;
+}
+
+int qoi_info(const void* data, int size, int *w, int *h, int* components) {
+	const unsigned char *bytes = (const unsigned char *)data;
+	int p = 0;
+	int width = 0;
+	int height = 0;
+	int channels = 0;
+	int colorspace = 0;
+	unsigned int header_magic = qoi_read_32(bytes, &p);
+	width = qoi_read_32(bytes, &p);
+	height = qoi_read_32(bytes, &p);
+	channels = bytes[p++];
+	colorspace = bytes[p++];
+
+	if (
+		width == 0 || height == 0 ||
+		channels < 3 || channels > 4 ||
+		colorspace > 1 ||
+		header_magic != QOI_MAGIC ||
+		height >= (int)(QOI_PIXELS_MAX / width)
+	) {
+		return 0;
+	}
+
+	*w = width;
+	*h = height;
+	*components = channels;
+	return 1;
 }
 
 void *qoi_decode(const void *data, int size, qoi_desc *desc, int channels,
