@@ -315,7 +315,7 @@ void *qoi_decode(const void *data, int size, qoi_desc *desc, int channels,
 /* Read image infos from memory.
 
 Returns 1 if succeeds, 0 in case of failure, e.g. not a QOI image. */
-int qoi_info(const void* data, int size, int *w, int *h, int* components);
+int qoi_info(const void* data, int *w, int *h, int* components);
 
 #ifdef __cplusplus
 }
@@ -518,7 +518,7 @@ void *qoi_encode(const void *data, const qoi_desc *desc, int *out_len,
 	return bytes;
 }
 
-int qoi_info(const void* data, int size, int *w, int *h, int* components) {
+int qoi_info(const void* data, int *w, int *h, int* components) {
 	const unsigned char *bytes = (const unsigned char *)data;
 	int p = 0;
 	int width = 0;
